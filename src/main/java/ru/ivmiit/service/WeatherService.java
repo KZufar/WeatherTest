@@ -11,6 +11,9 @@ import ru.ivmiit.dto.json.DataJsonDto;
 import ru.ivmiit.dto.json.WeatherJsonDto;
 import ru.ivmiit.web.utils.exception.IncorrectDataException;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class WeatherService {
 
@@ -26,11 +29,7 @@ public class WeatherService {
     @Autowired
     Gson gson;
 
-    public WeatherDto getWeather(String city, String units, int day) {
-        if (day < 1 || day > 7) {
-            throw new IncorrectDataException("day", "День должен быть в интервале от 1 до 7");
-        }
-
+    public List<WeatherDto> getWeather(String city, String units) {
         StringBuilder resource = new StringBuilder()
                 .append(apiUrl).append("daily")
                 .append("?city=").append(city)
@@ -51,21 +50,24 @@ public class WeatherService {
 
         WeatherJsonDto weatherJsonDto = gson.fromJson(json, WeatherJsonDto.class);
 
-        DataJsonDto data = weatherJsonDto.getData().get(day - 1);
+        List<WeatherDto> weatherDtoList = new ArrayList<>();
 
-        WeatherDto weatherDto = WeatherDto.builder()
-                .city(weatherJsonDto.getCity_name())
-                .date(data.getValid_date())
-                .relativeHumidity(data.getRh())
-                .pressure(data.getPres())
-                .windSpeed(data.getWind_spd())
-                .windDirection(data.getWind_cdir_full())
-                .clouds(data.getClouds())
-                .pop(data.getPop())
-                .temperature(data.getTemp())
-                .weatherDescription(data.getWeather().getDescription())
-                .build();
+        for (DataJsonDto data : weatherJsonDto.getData()) {
+            WeatherDto weatherDto = WeatherDto.builder()
+                    .city(weatherJsonDto.getCity_name())
+                    .date(data.getValid_date())
+                    .relativeHumidity(data.getRh())
+                    .pressure(data.getPres())
+                    .windSpeed(data.getWind_spd())
+                    .windDirection(data.getWind_cdir_full())
+                    .clouds(data.getClouds())
+                    .pop(data.getPop())
+                    .temperature(data.getTemp())
+                    .weatherDescription(data.getWeather().getDescription())
+                    .build();
+            weatherDtoList.add(weatherDto);
+        }
 
-        return weatherDto;
+        return weatherDtoList;
     }
 }
