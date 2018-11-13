@@ -20,23 +20,31 @@ public class WeatherController {
     @Autowired
     WeatherService weatherService;
 
-    @RequestMapping(value = "/weather", method = RequestMethod.POST)
+    @RequestMapping(value = "/show", method = RequestMethod.POST)
     public ModelAndView getWeather(@RequestParam(value = "city") String city,
                                    @RequestParam(value = "units") String units,
+                                   @RequestParam(value = "date") String dates,
                                    RedirectAttributes redirect) {
         try {
-            List<WeatherDto> weatherDtoList = weatherService.getWeather(city, units);
+            List<WeatherDto> weatherDtoList = weatherService.getWeather(city, units, dates);
             redirect.addFlashAttribute("weatherDtoList", weatherDtoList);
         } catch (IncorrectDataException e) {
-            return new ModelAndView("error");
+            return new ModelAndView("weather");
         }
 
         return new ModelAndView("redirect:/show");
     }
 
+
     @RequestMapping(value = "/weather", method = RequestMethod.GET)
-    public ModelAndView getWeather() {
-        return new ModelAndView("home");
+    public ModelAndView getWeather(RedirectAttributes redirect) {
+        try {
+            List<WeatherDto> weatherDtoList = weatherService.getWeather("Казань", "M", "0");
+            redirect.addFlashAttribute("weatherDtoList", weatherDtoList);
+        } catch (IncorrectDataException e) {
+            return new ModelAndView("weather");
+        }
+        return new ModelAndView("redirect:/show");
     }
 
     @RequestMapping(value = "show", method = RequestMethod.GET)

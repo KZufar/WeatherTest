@@ -1,6 +1,8 @@
 package ru.ivmiit.service;
 
 import com.google.gson.Gson;
+import io.swagger.models.auth.In;
+import lombok.Builder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -26,10 +28,10 @@ public class WeatherService {
     @Autowired
     RestTemplate restTemplate;
 
+
     @Autowired
     Gson gson;
-
-    public List<WeatherDto> getWeather(String city, String units) {
+    public List<WeatherDto> getWeather(String city, String units, String dataNum) {
         StringBuilder resource = new StringBuilder()
                 .append(apiUrl).append("daily")
                 .append("?city=").append(city)
@@ -67,6 +69,8 @@ public class WeatherService {
                     .build();
             weatherDtoList.add(weatherDto);
         }
+        weatherDtoList.add(0, weatherDtoList.get(Integer.parseInt(dataNum)));
+        weatherDtoList.remove(1);
 
         return weatherDtoList;
     }
