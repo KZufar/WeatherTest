@@ -3,6 +3,9 @@
 <%@ page import="java.util.Date" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.Calendar" %>
+<%@ page import="org.apache.poi.hssf.usermodel.HSSFWorkbook" %>
+<%@ page import="org.apache.poi.ss.usermodel.*" %>
+<%@ page import="java.io.FileOutputStream" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
@@ -112,7 +115,7 @@
 <div class="weather-widget">
     <form method="post" action="show">
         <div id="styled-select" background = blue >
-            <input placeholder="City" type="text" name="city"/>
+            <input placeholder="City" type="text" name="city" value="${weatherDtoList[0].city}"/>
             <table>
                 <tr>
                     <td>
@@ -157,8 +160,13 @@
 
             </table>
             <input type="submit" value="Получить информацию о погоде" />
+            <h3><a href="/downloadExcel">Загрузить данные о погоде</a></h3>
         </div>
     </form>
+    <%--<form method="post" action="show">--%>
+    <%--<h3><a href="/downloadExcel">Загрузить данные о погоде</a></h3>--%>
+    <%--</form>--%>
+
     <div class="weather-icon row">
         <i class="wi wi-day-sunny"></i>
     </div>
@@ -188,17 +196,25 @@
 </div>
 <div class="weather-forecast">
 
-    <c:forEach items="${weatherDtoList}" var="weatherDto">
-        <div class="forecast-item">
-            <div class="day">
-                <h4>${weatherDto.date}</h4>
-            </div>
-            <div class="forecast">
-                <i class="wi wi-night-sleet"></i> ${weatherDto.temperature}
-                <h6>${weatherDto.weatherDescription}</h6>
-            </div>
-        </div>
-    </c:forEach>
+    <%SimpleDateFormat formattedOtherDate = new SimpleDateFormat("EEEEEEEEEE, d MMM yyyy");
+        Calendar calendar = Calendar.getInstance();%>
+    <form method="post" action="show">
+
+        <c:forEach var="i" begin="1" end="6">
+            <a href="/date?date=${i}">
+                <div class="forecast-item" >
+                    <div class="day">
+                        <h4><%calendar.add(Calendar.DATE, 1);
+                            out.println(formattedOtherDate.format(calendar.getTime()));%></h4>
+                    </div>
+                    <div class="forecast">
+                        <i class="wi wi-night-sleet"></i> ${weatherDtoList[i].temperature}
+                        <h6>${weatherDtoList[i].weatherDescription}</h6>
+                    </div>
+                </div>
+            </a>
+        </c:forEach>
+    </form>
 </div>
 </body>
 </html>

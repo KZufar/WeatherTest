@@ -3,6 +3,8 @@ package ru.ivmiit.service;
 import com.google.gson.Gson;
 import io.swagger.models.auth.In;
 import lombok.Builder;
+import org.apache.poi.hssf.util.HSSFColor;
+import org.apache.poi.ss.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -13,8 +15,11 @@ import ru.ivmiit.dto.json.DataJsonDto;
 import ru.ivmiit.dto.json.WeatherJsonDto;
 import ru.ivmiit.web.utils.exception.IncorrectDataException;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class WeatherService {
