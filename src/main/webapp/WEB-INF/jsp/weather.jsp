@@ -148,7 +148,7 @@
 
                     </td>
                     <td>
-                        <select name="units">
+                        <select name="units" selected>
                             <option value="M">Цельсий</option>
                             <option value="I">Фаренгейт</option>
                             <option value="S">Кельвин</option>
@@ -170,7 +170,7 @@
     <div class="weather-icon row">
         <i class="wi wi-day-sunny"></i>
     </div>
-    <h1 class="temp-c row">${weatherDtoList[0].temperature}</h1>
+    <h1 class="temp-c row">${weatherDtoList[0].temperature} ${weatherUnit}</h1>
     <h5 class="condition row">${weatherDtoList[0].weatherDescription}</h5>
     <h3 class="location-name row">${weatherDtoList[0].city}</h3>
     <h5 class="location-country row"></h5>
@@ -209,6 +209,7 @@
             </div>
             <div class="forecast">
                 <i class="wi wi-night-sleet"></i> ${weatherDtoList[i].temperature}
+                <i class="wi wi-night-sleet"></i> ${weatherUnit}
                 <h6>${weatherDtoList[i].weatherDescription}</h6>
             </div>
         </div>

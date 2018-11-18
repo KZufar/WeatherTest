@@ -79,4 +79,15 @@ public class WeatherService {
 
         return weatherDtoList;
     }
+    public String getWeatherUnit(String units) {
+        String unit="";
+        if (units.equals("M")){
+            unit = "°C";
+        }else if (units.equals("I")){
+            unit="°F";
+        }else {
+            unit = "K";
+        }
+        return unit;
+    }
 }

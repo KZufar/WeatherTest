@@ -35,7 +35,9 @@ public class WeatherController {
         datesGlobal=dates;
         try {
             weatherDtoList = weatherService.getWeather(city, units, dates);
+            String unit = weatherService.getWeatherUnit(units);
             redirect.addFlashAttribute("weatherDtoList", weatherDtoList);
+            redirect.addFlashAttribute("weatherUnit", unit);
         } catch (IncorrectDataException e) {
             return new ModelAndView("weather");
         }
@@ -68,6 +70,8 @@ public class WeatherController {
     public ModelAndView getWeatherByDate(@RequestParam("date") String dates,
             RedirectAttributes redirect) {
         weatherDtoList = weatherService.getWeather(cityGlobal, unitsGlobal, dates);
+        String unit = weatherService.getWeatherUnit(unitsGlobal);
+        redirect.addFlashAttribute("weatherUnit", unit);
         redirect.addFlashAttribute("weatherDtoList", weatherDtoList);
         return new ModelAndView("redirect:/show");
     }
