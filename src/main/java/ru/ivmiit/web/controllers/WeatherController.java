@@ -28,13 +28,12 @@ public class WeatherController {
     @RequestMapping(value = "/show", method = RequestMethod.POST)
     public ModelAndView getWeather(@RequestParam(value = "city") String city,
                                    @RequestParam(value = "units") String units,
-                                   @RequestParam(value = "date") String dates,
                                    RedirectAttributes redirect) {
         cityGlobal = city;
         unitsGlobal=units;
-        datesGlobal=dates;
+//        datesGlobal=dates;
         try {
-            weatherDtoList = weatherService.getWeather(city, units, dates);
+            weatherDtoList = weatherService.getWeather(city, units, datesGlobal);
             String unit = weatherService.getWeatherUnit(units);
             redirect.addFlashAttribute("weatherDtoList", weatherDtoList);
             redirect.addFlashAttribute("weatherUnit", unit);

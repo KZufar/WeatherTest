@@ -118,37 +118,37 @@
             <input placeholder="City" type="text" name="city" value="${weatherDtoList[0].city}"/>
             <table>
                 <tr>
-                    <td>
-                        <select name="date" >
-                            <option value="0"><%
-                                SimpleDateFormat formattedDate = new SimpleDateFormat("EEE, d MMM yyyy");
-                                Calendar c = Calendar.getInstance();
-                                out.println(formattedDate.format(c.getTime()));%></option>
-                            <option value="1"><%
-                                c.add(Calendar.DATE, 1);
-                                out.println((formattedDate.format(c.getTime())));%></option>
-                            <option value="2"><%
-                                c.add(Calendar.DATE, 1);
-                                out.println((formattedDate.format(c.getTime())));%></option>
-                            <option value="3"><%
-                                c.add(Calendar.DATE, 1);
-                                out.println((formattedDate.format(c.getTime())));%></option>
-                            <option value="4"><%
-                                c.add(Calendar.DATE, 1);
-                                out.println((formattedDate.format(c.getTime())));%></option>
-                            <option value="5"><%
-                                c.add(Calendar.DATE, 1);
-                                out.println((formattedDate.format(c.getTime())));%></option>
-                            <option value="6"><%
-                                c.add(Calendar.DATE, 1);
-                                out.println((formattedDate.format(c.getTime())));%></option>
-                        </select>
-                    </td>
+                    <%--<td>--%>
+                    <%--<select name="date" >--%>
+                    <%--<option value="0"><%--%>
+                    <%--SimpleDateFormat formattedDate = new SimpleDateFormat("EEE, d MMM yyyy");--%>
+                    <%--Calendar c = Calendar.getInstance();--%>
+                    <%--out.println(formattedDate.format(c.getTime()));%></option>--%>
+                    <%--<option value="1"><%--%>
+                    <%--c.add(Calendar.DATE, 1);--%>
+                    <%--out.println((formattedDate.format(c.getTime())));%></option>--%>
+                    <%--<option value="2"><%--%>
+                    <%--c.add(Calendar.DATE, 1);--%>
+                    <%--out.println((formattedDate.format(c.getTime())));%></option>--%>
+                    <%--<option value="3"><%--%>
+                    <%--c.add(Calendar.DATE, 1);--%>
+                    <%--out.println((formattedDate.format(c.getTime())));%></option>--%>
+                    <%--<option value="4"><%--%>
+                    <%--c.add(Calendar.DATE, 1);--%>
+                    <%--out.println((formattedDate.format(c.getTime())));%></option>--%>
+                    <%--<option value="5"><%--%>
+                    <%--c.add(Calendar.DATE, 1);--%>
+                    <%--out.println((formattedDate.format(c.getTime())));%></option>--%>
+                    <%--<option value="6"><%--%>
+                    <%--c.add(Calendar.DATE, 1);--%>
+                    <%--out.println((formattedDate.format(c.getTime())));%></option>--%>
+                    <%--</select>--%>
+                    <%--</td>--%>
                     <td>
 
                     </td>
                     <td>
-                        <select name="units">
+                        <select name="units" selected>
                             <option value="M">Цельсий</option>
                             <option value="I">Фаренгейт</option>
                             <option value="S">Кельвин</option>
@@ -163,14 +163,12 @@
             <h3><a href="/downloadExcel">Загрузить данные о погоде</a></h3>
         </div>
     </form>
-    <%--<form method="post" action="show">--%>
-    <%--<h3><a href="/downloadExcel">Загрузить данные о погоде</a></h3>--%>
-    <%--</form>--%>
 
     <div class="weather-icon row">
         <i class="wi wi-day-sunny"></i>
     </div>
-    <h1 class="temp-c row">${weatherDtoList[0].temperature}</h1>
+    <h1 class="temp-c row">${weatherDtoList[0].date}</h1>
+    <h1 class="temp-c row">${weatherDtoList[0].temperature} ${weatherUnit}</h1>
     <h5 class="condition row">${weatherDtoList[0].weatherDescription}</h5>
     <h3 class="location-name row">${weatherDtoList[0].city}</h3>
     <h5 class="location-country row"></h5>
@@ -200,15 +198,17 @@
         Calendar calendar = Calendar.getInstance();%>
     <form method="post" action="show">
 
-        <c:forEach var="i" begin="1" end="6">
+        <c:forEach var="i" begin="0" end="6">
             <a href="/date?date=${i}">
                 <div class="forecast-item" >
                     <div class="day">
-                        <h4><%calendar.add(Calendar.DATE, 1);
-                            out.println(formattedOtherDate.format(calendar.getTime()));%></h4>
+                        <h4><%
+                            out.println(formattedOtherDate.format(calendar.getTime()));
+                            calendar.add(Calendar.DATE, 1);%></h4>
                     </div>
                     <div class="forecast">
                         <i class="wi wi-night-sleet"></i> ${weatherDtoList[i].temperature}
+                        <i class="wi wi-night-sleet"></i> ${weatherUnit}
                         <h6>${weatherDtoList[i].weatherDescription}</h6>
                     </div>
                 </div>
