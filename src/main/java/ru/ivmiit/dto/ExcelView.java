@@ -16,8 +16,6 @@ import java.util.List;
 import java.util.Map;
 
 public class ExcelView extends AbstractXlsView{
-    @Autowired
-    Gson gson;
     @Override
     protected void buildExcelDocument(Map<String, Object> model,
                                       Workbook workbook,

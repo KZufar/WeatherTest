@@ -31,10 +31,11 @@ public class WeatherController {
                                    RedirectAttributes redirect) {
         cityGlobal = city;
         unitsGlobal=units;
-//        datesGlobal=dates;
         try {
             weatherDtoList = weatherService.getWeather(city, units, datesGlobal);
             String unit = weatherService.getWeatherUnit(units);
+            List<String> weatherUnits = weatherService.getUnits();
+            redirect.addFlashAttribute("weatherUnits", weatherUnits);
             redirect.addFlashAttribute("weatherDtoList", weatherDtoList);
             redirect.addFlashAttribute("weatherUnit", unit);
         } catch (IncorrectDataException e) {
@@ -49,7 +50,9 @@ public class WeatherController {
     public ModelAndView getWeather(RedirectAttributes redirect) {
         try {
             List<WeatherDto> weatherDtoList = weatherService.getWeather("Казань", "M", "0");
+            List<String> weatherUnits = weatherService.getUnits();
             redirect.addFlashAttribute("weatherDtoList", weatherDtoList);
+            redirect.addFlashAttribute("weatherUnits", weatherUnits);
         } catch (IncorrectDataException e) {
             return new ModelAndView("weather");
         }
@@ -70,8 +73,10 @@ public class WeatherController {
             RedirectAttributes redirect) {
         weatherDtoList = weatherService.getWeather(cityGlobal, unitsGlobal, dates);
         String unit = weatherService.getWeatherUnit(unitsGlobal);
+        List<String> weatherUnits = weatherService.getUnits();
         redirect.addFlashAttribute("weatherUnit", unit);
         redirect.addFlashAttribute("weatherDtoList", weatherDtoList);
+        redirect.addFlashAttribute("weatherUnits", weatherUnits);
         return new ModelAndView("redirect:/show");
     }
 

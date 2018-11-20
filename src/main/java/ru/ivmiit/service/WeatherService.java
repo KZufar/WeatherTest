@@ -74,9 +74,7 @@ public class WeatherService {
                     .build();
             weatherDtoList.add(weatherDto);
         }
-        weatherDtoList.add(0, weatherDtoList.get(Integer.parseInt(dataNum)));
-        weatherDtoList.remove(1);
-
+        weatherDtoList.add(weatherDtoList.get(Integer.parseInt(dataNum)));
         return weatherDtoList;
     }
     public String getWeatherUnit(String units) {
@@ -88,6 +86,16 @@ public class WeatherService {
         }else {
             unit = "K";
         }
+        return unit;
+    }
+
+    public List<String> getUnits() {
+        List<String> unit = new ArrayList<>();
+        unit.add("%");
+        unit.add("%");
+        unit.add("мб");
+        unit.add("%");
+        unit.add("м/с");
         return unit;
     }
 }
